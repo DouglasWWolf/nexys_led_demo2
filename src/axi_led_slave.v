@@ -104,6 +104,7 @@ always @(posedge clk) begin
     // If we're in reset, initialize important registers
     if (resetn == 0) begin
         ashi_write_state  <= 0;
+        leds              <= 0;
 
     // If we're not in reset, and a write-request has occured...        
     end else case (ashi_write_state)
