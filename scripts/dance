@@ -1,0 +1,14 @@
+while [ 1 -eq 1 ]; do
+
+    axireg 0x1000 0x5555
+    sleep .3
+
+    axireg 0x1000 0xAAAA
+    sleep .3
+
+done
+~                                                                                                                                                        
+~                                                                                                                                                        
+~                                                                                                                                                        
+~                                                                                                                                                        
+~      
