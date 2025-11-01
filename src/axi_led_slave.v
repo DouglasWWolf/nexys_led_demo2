@@ -5,6 +5,8 @@
 //   Date     Who   Ver  Changes
 //====================================================================================
 // 02-May-24  DWW     1  Initial Creation
+//
+// 01-Nov-25  DWW     2  Updated to more modern axi4_lite_slave.v
 //====================================================================================
 
 /*
@@ -169,15 +171,17 @@ end
 //==========================================================================
 // This connects us to an AXI4-Lite slave core
 //==========================================================================
-axi4_lite_slave#(ADDR_MASK) axil_slave
+axi4_lite_slave#(.AW(AW)) axil_slave
 (
     .clk            (clk),
     .resetn         (resetn),
     
     // AXI AW channel
     .AXI_AWADDR     (S_AXI_AWADDR),
+    .AXI_AWPROT     (S_AXI_AWPROT),
     .AXI_AWVALID    (S_AXI_AWVALID),   
     .AXI_AWREADY    (S_AXI_AWREADY),
+    
     
     // AXI W channel
     .AXI_WDATA      (S_AXI_WDATA),
@@ -191,7 +195,8 @@ axi4_lite_slave#(ADDR_MASK) axil_slave
     .AXI_BREADY     (S_AXI_BREADY),
 
     // AXI AR channel
-    .AXI_ARADDR     (S_AXI_ARADDR), 
+    .AXI_ARADDR     (S_AXI_ARADDR),
+    .AXI_ARPROT     (S_AXI_ARPROT), 
     .AXI_ARVALID    (S_AXI_ARVALID),
     .AXI_ARREADY    (S_AXI_ARREADY),
 
