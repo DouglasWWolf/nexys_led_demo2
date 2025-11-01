@@ -62,20 +62,20 @@ localparam REG_LEDS = 0;
 // We'll communicate with the AXI4-Lite Slave core with these signals.
 //==========================================================================
 // AXI Slave Handler Interface for write requests
-wire[31:0]  ashi_windx;     // Input   Write register-index
-wire[31:0]  ashi_waddr;     // Input:  Write-address
-wire[31:0]  ashi_wdata;     // Input:  Write-data
-wire        ashi_write;     // Input:  1 = Handle a write request
-reg[1:0]    ashi_wresp;     // Output: Write-response (OKAY, DECERR, SLVERR)
-wire        ashi_widle;     // Output: 1 = Write state machine is idle
+wire[  31:0] ashi_windx;     // Input   Write register-index
+wire[AW-1:0] ashi_waddr;     // Input:  Write-address
+wire[  31:0] ashi_wdata;     // Input:  Write-data
+wire         ashi_write;     // Input:  1 = Handle a write request
+reg [   1:0] ashi_wresp;     // Output: Write-response (OKAY, DECERR, SLVERR)
+wire         ashi_widle;     // Output: 1 = Write state machine is idle
 
 // AXI Slave Handler Interface for read requests
-wire[31:0]  ashi_rindx;     // Input   Read register-index
-wire[31:0]  ashi_raddr;     // Input:  Read-address
-wire        ashi_read;      // Input:  1 = Handle a read request
-reg[31:0]   ashi_rdata;     // Output: Read data
-reg[1:0]    ashi_rresp;     // Output: Read-response (OKAY, DECERR, SLVERR);
-wire        ashi_ridle;     // Output: 1 = Read state machine is idle
+wire[  31:0] ashi_rindx;     // Input   Read register-index
+wire[AW-1:0] ashi_raddr;     // Input:  Read-address
+wire         ashi_read;      // Input:  1 = Handle a read request
+reg [  31:0] ashi_rdata;     // Output: Read data
+reg [   1:0] ashi_rresp;     // Output: Read-response (OKAY, DECERR, SLVERR);
+wire         ashi_ridle;     // Output: 1 = Read state machine is idle
 //==========================================================================
 
 // The state of the state-machines that handle AXI4-Lite read and AXI4-Lite write
@@ -89,12 +89,6 @@ assign ashi_ridle = (ashi_read  == 0) && (ashi_read_state  == 0);
 localparam OKAY   = 0;
 localparam SLVERR = 2;
 localparam DECERR = 3;
-
-// Create an 'AW' bits long sequence of '1' bits
-localparam ADDR_MASK = (1 << AW) - 1;
-
-// This is a scratch-pad register that doesn't do anything
-reg[31:0] scratch;
 
 //==========================================================================
 // This state machine handles AXI4-Lite write requests
